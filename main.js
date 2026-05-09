@@ -476,4 +476,14 @@ async function _quickTest() {
   ].map((p) => {
     return Promise.race([
       new Promise((resolve) => {
-        p.
+        p.on('close', (code) => {
+          resolve(code !== 127);
+        });
+      }),
+    ]);
+  }));
+  
+  const [ffmpeg, ffprobe, ffmpegWebp, convert, magick, gm, find] = test;
+  const s = global.support = { ffmpeg, ffprobe, ffmpegWebp, convert, magick, gm, find };
+  Object.freeze(global.support);
+}
